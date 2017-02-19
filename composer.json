@@ -1,0 +1,33 @@
+{
+    "name": "grimzy/security-json-service-provider",
+    "description": "Service Provider JSON auth",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Joseph Estefane",
+            "email": "estefanejoe@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "pimple/pimple": "3.0.*",
+        "symfony/security": "~2.8|~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Grimzy\\SecurityJsonServiceProvider\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Grimzy\\SecurityJsonServiceProvider\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    }
+}
