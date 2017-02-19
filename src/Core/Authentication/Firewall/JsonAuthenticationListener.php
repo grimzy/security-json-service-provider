@@ -24,8 +24,6 @@ class JsonAuthenticationListener implements ListenerInterface
     public function __construct(TokenStorageInterface $tokenStorage,
                                 AuthenticationManagerInterface $authenticationManager,
                                 $providerKey,
-//                                AuthenticationSuccessHandlerInterface $successHandler,
-//                                AuthenticationFailureHandlerInterface $failureHandler = null,
                                 array $options = [],
                                 LoggerInterface $logger = null)
     {
@@ -94,43 +92,5 @@ class JsonAuthenticationListener implements ListenerInterface
             // throwing an authentication exception returns the default entry point
             throw $e;
         }
-    }
-
-    /**
-     * @param GetResponseEvent $event
-     * @param Request $request
-     * @param TokenInterface $token
-     *
-     * @return Response
-     */
-    protected function onSuccess(GetResponseEvent $event, Request $request, TokenInterface $token)
-    {
-        if (null !== $this->logger) {
-            $this->logger->info(sprintf('User "%s" has retrieved a JWT', $token->getUsername()));
-        }
-        $response = $this->successHandler->onAuthenticationSuccess($request, $token);
-        if (!$response instanceof Response) {
-            throw new \RuntimeException('Authentication Success Handler did not return a Response.');
-        }
-        return $response;
-    }
-
-    /**
-     * @param GetResponseEvent $event
-     * @param Request $request
-     * @param AuthenticationException $failed
-     *
-     * @return Response
-     */
-    protected function onFailure(GetResponseEvent $event, Request $request, AuthenticationException $failed)
-    {
-        if (null !== $this->logger) {
-            $this->logger->info(sprintf('JWT request failed: %s', $failed->getMessage()));
-        }
-        $response = $this->failureHandler->onAuthenticationFailure($request, $failed);
-        if (!$response instanceof Response) {
-            throw new \RuntimeException('Authentication Failure Handler did not return a Response.');
-        }
-        return $response;
     }
 }
