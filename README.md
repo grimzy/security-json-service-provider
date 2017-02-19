@@ -1,10 +1,10 @@
 # Silex Security JSON Service Provider
 
-It provides a replacement for the security factory "form_login". "form_login" is designed for use with cookies and will set cookies even when the stateless parameter is true.
+This Security factory provides a cookie-less replacement for `form_login` which cannot be used .
 
-The 'switch_user' and 'logout' config options are not supported with this security factory as they rely on cookies.
+Since they rely on cookies, the `switch_user` and `logout` config options are not supported with this Security factory.
 
-**Security advisory:** Always use SSL connections to transport your JSON content.
+**Security advisory:** Although you are not forced to, it is highly advised to use HTTPS.
 
 ## Installation
 
