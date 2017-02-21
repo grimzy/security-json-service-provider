@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../AbstractTestCase.php';
-
 abstract class AbstractCredentialsTestCase extends AbstractTestCase
 {
     abstract protected function getOptions();

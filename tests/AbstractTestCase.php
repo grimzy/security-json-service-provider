@@ -6,7 +6,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     {
         require_once __DIR__ . '/../vendor/autoload.php';
 
-        $app = new Silex\Application(['debug' => true]);
+        $app = new \Silex\Application(['debug' => true]);
 
         $app['security.firewalls'] = [
             'login' => [

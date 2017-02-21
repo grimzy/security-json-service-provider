@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/AbstractCredentialsTestCase.php';
-
 class JsonOffPostOffTest extends AbstractCredentialsTestCase
 {
     protected function getOptions()

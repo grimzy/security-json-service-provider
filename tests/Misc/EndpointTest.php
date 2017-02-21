@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../AbstractTestCase.php';
-require_once __DIR__ . '/../TestAuthenticationEntryPoint.php';
 
 class EndpointTest extends AbstractTestCase
 {
