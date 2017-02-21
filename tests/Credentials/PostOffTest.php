@@ -1,4 +1,5 @@
 <?php
+namespace Grimzy\SecurityJsonServiceProvider\Tests\Credentials;
 
 class PostOffTest extends AbstractCredentialsTestCase
 {
@@ -7,7 +8,7 @@ class PostOffTest extends AbstractCredentialsTestCase
         return ['json_only' => true, 'post_only' => false];
     }
 
-    protected function codesForPostAsForm(): array
+    protected function codesForPostAsForm()
     {
         return [
             'no' => 401,
@@ -18,7 +19,7 @@ class PostOffTest extends AbstractCredentialsTestCase
         ];
     }
 
-    protected function codesForPostAsJson(): array
+    protected function codesForPostAsJson()
     {
         return [
             'no' => 401,
@@ -29,7 +30,7 @@ class PostOffTest extends AbstractCredentialsTestCase
         ];
     }
 
-    protected function codesForGetAsParameter(): array
+    protected function codesForGetAsParameter()
     {
         return [
             'no' => 401,
@@ -40,7 +41,7 @@ class PostOffTest extends AbstractCredentialsTestCase
         ];
     }
 
-    protected function codesForGetAsJson(): array
+    protected function codesForGetAsJson()
     {
         return [
             'no' => 401,

@@ -1,12 +1,27 @@
 <?php
+namespace Grimzy\SecurityJsonServiceProvider\Tests;
 
-abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
+use Grimzy\SecurityJsonServiceProvider\SecurityJsonServiceProvider;
+use PHPUnit\Framework\TestCase;
+use Silex\Application;
+use Silex\Provider\SecurityServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Client;
+use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
+use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+
+abstract class AbstractTestCase extends TestCase
 {
-    protected function createApplication($options = true): \Silex\Application
+    /**
+     * @param bool $options
+     * @return Application
+     */
+    protected function createApplication($options = true)
     {
-        require_once __DIR__ . '/../vendor/autoload.php';
+//        require_once __DIR__ . '/../vendor/autoload.php';
 
-        $app = new \Silex\Application(['debug' => true]);
+        $app = new Application(['debug' => true]);
 
         $app['security.firewalls'] = [
             'login' => [
@@ -25,24 +40,24 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
                     'roles' => array('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
                 ),
             ];
-            return new \Symfony\Component\Security\Core\User\InMemoryUserProvider($users);
+            return new InMemoryUserProvider($users);
         };
 
-        $app->register(new Silex\Provider\SecurityServiceProvider());
-        $app->register(new \Grimzy\SecurityJsonServiceProvider\SecurityJsonServiceProvider());
+        $app->register(new SecurityServiceProvider());
+        $app->register(new SecurityJsonServiceProvider());
 
         $app['security.default_encoder'] = function () {
-            return new \Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder();
+            return new PlaintextPasswordEncoder();
         };
 
 
-        $app->post('/api/login', function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
-            return new \Symfony\Component\HttpFoundation\Response('success post');
+        $app->post('/api/login', function (Request $request) use ($app) {
+            return new Response('success post');
         });
 
         if (isset($options['post_only']) && false === $options['post_only']) {
-            $app->get('/api/login', function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
-                return new \Symfony\Component\HttpFoundation\Response('success get');
+            $app->get('/api/login', function (Request $request) use ($app) {
+                return new Response('success get');
             });
         }
 
@@ -52,17 +67,17 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     /**
      * Creates a Client.
      *
-     * @param \Silex\Application $app
+     * @param Application $app
      * @param array $server Server parameters
      *
-     * @return \Symfony\Component\HttpKernel\Client A Client instance
+     * @return Client A Client instance
      */
-    protected function createClient(\Silex\Application $app, array $server = array())
+    protected function createClient(Application $app, array $server = array())
     {
         if (!class_exists('Symfony\Component\BrowserKit\Client')) {
             throw new \LogicException('Component "symfony/browser-kit" is required by WebTestCase.' . PHP_EOL . 'Run composer require symfony/browser-kit');
         }
 
-        return new \Symfony\Component\HttpKernel\Client($app, $server);
+        return new Client($app, $server);
     }
 }

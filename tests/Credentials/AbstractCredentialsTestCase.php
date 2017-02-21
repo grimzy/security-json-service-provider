@@ -1,18 +1,21 @@
 <?php
+namespace Grimzy\SecurityJsonServiceProvider\Tests\Credentials;
+
+use Grimzy\SecurityJsonServiceProvider\Tests\AbstractTestCase;
 
 abstract class AbstractCredentialsTestCase extends AbstractTestCase
 {
     abstract protected function getOptions();
 
-    abstract protected function codesForPostAsForm(): array;
+    abstract protected function codesForPostAsForm();
 
-    abstract protected function codesForPostAsJson(): array;
+    abstract protected function codesForPostAsJson();
 
-    abstract protected function codesForGetAsParameter(): array;
+    abstract protected function codesForGetAsParameter();
 
-    abstract protected function codesForGetAsJson(): array;
+    abstract protected function codesForGetAsJson();
 
-    protected function getUri(): string
+    protected function getUri()
     {
         return '/api/login';
     }

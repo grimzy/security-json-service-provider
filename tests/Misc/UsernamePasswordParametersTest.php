@@ -1,4 +1,7 @@
 <?php
+namespace Grimzy\SecurityJsonServiceProvider\Tests\Misc;
+
+use Grimzy\SecurityJsonServiceProvider\Tests\AbstractTestCase;
 
 class UsernamePasswordParametersTest extends AbstractTestCase
 {

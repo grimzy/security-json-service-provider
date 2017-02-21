@@ -1,4 +1,8 @@
 <?php
+namespace Grimzy\SecurityJsonServiceProvider\Tests\Misc;
+
+use Grimzy\SecurityJsonServiceProvider\Tests\AbstractTestCase;
+use Grimzy\SecurityJsonServiceProvider\Tests\TestAuthenticationEntryPoint;
 
 class EndpointTest extends AbstractTestCase
 {
