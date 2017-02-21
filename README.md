@@ -1,5 +1,7 @@
 # Silex Security JSON Service Provider
 
+[![Build Status](https://travis-ci.org/grimzy/security-json-service-provider.svg?branch=master)](https://travis-ci.org/grimzy/security-json-service-provider)
+
 This Security factory provides a cookie-less replacement for `form_login` which cannot be used .
 
 Since they rely on cookies, the `switch_user` and `logout` config options are not supported with this Security factory.
