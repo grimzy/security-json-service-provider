@@ -60,22 +60,21 @@ class JsonAuthenticationListener implements ListenerInterface
         $username = AuthenticationProviderInterface::USERNAME_NONE_PROVIDED;
         $password = null;
 
-        if ($this->options['post_only']) {
-            if (false !== strpos($request->headers->get('Content-Type'), 'application/json')) {
-                $data = json_decode($request->getContent(), true);
-                $username = trim(isset($data["{$this->options['username_parameter']}"]) ? $data["{$this->options['username_parameter']}"] : $username);
-                $password = isset($data["{$this->options['password_parameter']}"]) ? $data["{$this->options['password_parameter']}"] : null;
-            }
-
-            if (empty($username) && !$this->options['json_only']) {
-                $username = trim($request->request->get($this->options['username_parameter'], $username));
-                $password = $request->request->get($this->options['password_parameter'], null);
-            }
-        } else {
-            $username = trim($request->get($this->options['username_parameter'], $username));
-            $password = $request->get($this->options['password_parameter'], null);
+        if (false !== strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = json_decode($request->getContent(), true);
+            $username = trim(isset($data["{$this->options['username_parameter']}"]) ? $data["{$this->options['username_parameter']}"] : $username);
+            $password = isset($data["{$this->options['password_parameter']}"]) ? $data["{$this->options['password_parameter']}"] : null;
         }
 
+        if (true !== $this->options['json_only'] && AuthenticationProviderInterface::USERNAME_NONE_PROVIDED === $username) {
+            $username = trim($request->request->get($this->options['username_parameter'], $username));
+            $password = $request->request->get($this->options['password_parameter'], null);
+
+            if (true !== $this->options['post_only'] && AuthenticationProviderInterface::USERNAME_NONE_PROVIDED === $username) {
+                $username = trim($request->get($this->options['username_parameter'], $username));
+                $password = $request->get($this->options['password_parameter'], null);
+            }
+        }
 
         try {
             $token = $this->authenticationManager->authenticate(new UsernamePasswordToken($username, $password, $this->providerKey));
