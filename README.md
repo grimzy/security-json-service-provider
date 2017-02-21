@@ -25,7 +25,7 @@ Or adding to composer.json:
 Configure firewalls:
 
 ```php
-$app['security.firewalls' => [
+$app['security.firewalls'] = [
   'login' => [
     'pattern' => '^/api/login',
     'anonymous' => true,
@@ -44,7 +44,7 @@ $app['security.firewalls' => [
     'stateless' => true,
     'token' => true	
   ],
-]];
+];
 ```
 
 Add a users provider:
@@ -99,7 +99,6 @@ Define a route (**only accessible after successful authentication**):
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 $app->post('/api/login', function(Request $request) use ($app) {
   $user = $app['user'];	// Logged in user
   
@@ -108,5 +107,39 @@ $app->post('/api/login', function(Request $request) use ($app) {
   return new JsonResponse([
     'token' => $token
   ]);
+};
+```
+**Note:** if `post_only` is `false`, you can use `$app->get()` instead of `$app->post` when defining your route.
+
+## Override entry point
+
+Create a new class implementing `Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface`:
+
+```php
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
+
+class GandalfAuthenticationEntryPoint implements AuthenticationEntryPointInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        return new Response('You shall not pass!', Response::HTTP_UNAUTHORIZED);
+    }
+}
+```
+
+Replace the packaged JsonAuthenticationEntrypoint with the created one:
+
+```php
+$app->register(new Silex\Provider\SecurityJsonServiceProvider());
+
+// after registering the provider
+$app['security.entry_point.json'] = function () use ($app) {
+    return new GandalfAuthenticationEntryPoint();
 };
 ```
