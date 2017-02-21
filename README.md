@@ -1,6 +1,12 @@
 # Silex Security JSON Service Provider
 
-[![Build Status](https://travis-ci.org/grimzy/security-json-service-provider.svg?branch=master)](https://travis-ci.org/grimzy/security-json-service-provider)
+[![Build Status](https://img.shields.io/travis/ARCANEDEV/LogViewer.svg?style=flat-square)](https://travis-ci.org/grimzy/security-json-service-provider)
+[![Packagist](https://img.shields.io/packagist/v/grimzy/security-json-service-provider.svg?style=flat-square)](https://packagist.org/packages/grimzy/security-json-service-provider)
+[![Packagist](https://img.shields.io/packagist/dt/grimzy/security-json-service-provider.svg?style=flat-square)](https://packagist.org/packages/grimzy/security-json-service-provider)
+[![Packagist Pre Release](https://img.shields.io/packagist/vpre/grimzy/security-json-service-provider.svg?style=flat-square)](https://packagist.org/packages/grimzy/security-json-service-provider)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](LICENSE)
+
+
 
 This Security factory provides a cookie-less replacement for `form_login` which cannot be used .
 
